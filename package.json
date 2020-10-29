@@ -1,0 +1,18 @@
+{
+  "name": "ctrlc-windows",
+  "version": "0.1.0",
+  "description": "Send CTRL-C to a process on Windows",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thefrontside/bigtest.git"
+  },
+  "author": "Frontside Engineering <engineering@frontside.com>",
+  "license": "MIT",
+  "dependencies": {
+    "neon-cli": "^0.5.0"
+  },
+  "scripts": {
+    "install": "neon build"
+  }
+}
