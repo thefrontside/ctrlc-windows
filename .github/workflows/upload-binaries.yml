@@ -1,0 +1,49 @@
+name: Upload Binaries
+on:
+  push:
+    branches:
+      - 'v[0-9]+'
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    if: ${{ github.actor == 'frontsidejack' }}
+    outputs:
+      package_version: ${{ steps.package.outputs.version }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Get package version
+      run: echo "::set-output name=version::v$(node -p "require('./package.json').version")"
+      id: package
+    - uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.package.outputs.version }}
+        release_name: Release ${{ steps.package.outputs.version }}
+  upload-binary:
+    name: Upload Assets (node ${{ matrix.node-version }})
+    runs-on: windows-latest
+    needs: release
+    strategy:
+      matrix:
+        node-version: ['10', '12', '14']
+    steps:
+    - uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+    - uses: actions/checkout@v1
+    - uses: volta-cli/action@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+        yarn-version: 1.22.5
+    - run: yarn install
+    - run: yarn neon build --release
+    - run: yarn node-pre-gyp package
+    - uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: build\stage\*\*.tar.gz
+        tag: ${{ needs.release.outputs.package_version }}
+        file_glob: true

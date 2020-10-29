@@ -5,17 +5,32 @@
   "main": "lib/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/thefrontside/bigtest.git"
+    "url": "https://github.com/thefrontside/ctrlc-windows.git"
+  },
+  "files": [
+    "build.js",
+    "native/index.node",
+    "native/killer*",
+    "lib"
+  ],
+  "binary": {
+    "module_name": "index",
+    "host": "https://github.com/thefrontside/ctrlc-windows/releases/download/",
+    "remote_path": "v{version}",
+    "package_name": "{node_abi}-{platform}-{arch}.tar.gz",
+    "module_path": "./native",
+    "pkg_path": "."
   },
   "author": "Frontside Engineering <engineering@frontside.com>",
   "license": "MIT",
   "dependencies": {
     "@types/node": "^14.14.6",
-    "neon-cli": "^0.5.0"
+    "neon-cli": "^0.5.0",
+    "node-pre-gyp": "amilajack/node-pre-gyp#neon-compat"
   },
   "scripts": {
     "build": "node build.js",
-    "install": "node build.js release",
+    "install": "node-pre-gyp install --fallback-to-build=false || node build.js release",
     "test": "mocha -r ts-node/register \"test/**/*.test.ts\""
   },
   "devDependencies": {
@@ -25,6 +40,11 @@
     "expect": "^26.6.2",
     "mocha": "^8.2.0",
     "ts-node": "^9.0.0",
-    "typescript": "^4.0.5"
+    "typescript": "^4.0.5",
+    "@changesets/cli": "2.7.2"
+  },
+  "volta": {
+    "node": "12.19.0",
+    "yarn": "1.22.10"
   }
 }

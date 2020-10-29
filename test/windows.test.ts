@@ -1,6 +1,5 @@
 import { ChildProcess, spawn } from 'child_process';
 import expect from 'expect';
-import { converge } from './helpers';
 import { ctrlc } from '../lib/index';
 
 if (process.platform === "win32") {
@@ -14,25 +13,22 @@ if (process.platform === "win32") {
     describe('on a running process', () => {
       let child: ChildProcess;
       let promise: Promise<unknown>;
-      let stdout: string;
       beforeEach(async () => {
-        stdout = '';
         promise = new Promise((resolve, reject)=> {
           child = spawn("node", ["./test/fixtures/daemon.js"], {
             stdio: 'pipe',
+            shell: false,
             windowsHide: true
           });
           child.on('error', reject);
-          child.on('exit', resolve);
-          child.stdout?.on('data', chunk => stdout += chunk);
+          child.on('exit', () => resolve('process complete'));
         });
         await new Promise(resolve => setTimeout(resolve, 100));
-
         ctrlc(child.pid);
+        child.stdin?.end();
       });
       it('causes that process to exit', async () => {
-        await promise;
-        await converge(() => expect(stdout).toContain("exiting..."))
+        await expect(promise).resolves.toEqual('process complete');
       });
     });
   });
