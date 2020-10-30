@@ -1,46 +1,32 @@
 use neon::prelude::*;
 use winapi::shared::minwindef::{TRUE, FALSE};
-
 use winapi::um::consoleapi::*;
-use winapi::um::wincon::*;
-use std::process::Command;
-
-// https://gist.github.com/rdp/f51fb274d69c5c31b6be
+use std::process::{Command};
 
 pub fn ctrlc(mut cx: FunctionContext) -> JsResult<JsUndefined> {
     let pid = cx.argument::<JsNumber>(0)?.value() as u32;
+    let killer_exe = cx.argument::<JsString>(1)?.value() as String;
+
     unsafe {
-        // Once you call FreeConsole, there's no way to get
-        // back to it. This starts a placeholder process that inherits
-        // our console so that we can reattach to it later.
-        let mut holder = match Command::new("cmd.exe").spawn() {
+        SetConsoleCtrlHandler(None, TRUE);
+    };
+
+    let mut killer = match Command::new(killer_exe)
+        .arg(format!("{}", pid))
+        .spawn() {
             Ok(child) => child,
-            Err(_) => return cx.throw_error("unable to retain console")
+            Err(error) => return cx.throw_error(format!("unable to retain console: {}", error))
         };
 
-        // release our current console
-        FreeConsole();
+    let status = killer.wait();
 
-        // attach to the console of the process we want to send ctrl-c to
-        if AttachConsole(pid) != 0 {
-            SetConsoleCtrlHandler(None, TRUE);
-            GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0);
-            FreeConsole();
-            AttachConsole(holder.id());
+    unsafe { SetConsoleCtrlHandler(None, FALSE) };
 
-            SetConsoleCtrlHandler(None, FALSE);
-
-            match holder.kill() {
-                Ok(_) => Ok(cx.undefined()),
-                Err(_) => cx.throw_error("unable to kill off placeholder process")
-            }
-
-        } else {
-            match holder.kill() {
-                Ok(_) => Ok(cx.undefined()),
-                Err(_) => cx.throw_error("unable to kill off placeholder process")
-            }?;
-            cx.throw_error(format!("unable to attach to console of  {pid}", pid=pid))
-        }
+    match status {
+        Ok(status) if status.success() => {
+            Ok(cx.undefined())
+        },
+        Ok(_) => cx.throw_error("killed with bad exit"),
+        Err(_) => cx.throw_error("bad")
     }
 }

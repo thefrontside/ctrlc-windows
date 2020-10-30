@@ -1,5 +1,6 @@
 native/target
 native/index.node
+native/killer.exe
 native/artifacts.json
 **/*~
 **/node_modules
