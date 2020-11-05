@@ -1,14 +1,14 @@
-#[cfg(target_family = "windows")]
+#[cfg(windows)]
 use std::error::Error;
 
-#[cfg(target_family = "windows")]
+#[cfg(windows)]
 use winapi::um::wincon::*;
-#[cfg(target_family = "windows")]
+#[cfg(windows)]
 use winapi::um::consoleapi::*;
-#[cfg(target_family = "windows")]
+#[cfg(windows)]
 use winapi::shared::minwindef::{TRUE};
 
-#[cfg(target_family = "windows")]
+#[cfg(windows)]
 pub fn main() -> Result<(), Box<dyn Error>> {
     let pid = match std::env::args().nth(1) {
         Some(arg) => arg.parse::<u32>(),
@@ -20,7 +20,7 @@ pub fn main() -> Result<(), Box<dyn Error>> {
     }
 }
 
-#[cfg(target_family = "windows")]
+#[cfg(windows)]
 fn kill_pid(pid: u32) -> Result<(), Box<dyn Error>> {
     unsafe {
         FreeConsole();
@@ -35,7 +35,7 @@ fn kill_pid(pid: u32) -> Result<(), Box<dyn Error>> {
     }
 }
 
-#[cfg(target_family = "unix")]
+#[cfg(unix)]
 pub fn main() {
     println!("this program is not designed to work on non-windows platforms");
     std::process::exit(1);
