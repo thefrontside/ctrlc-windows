@@ -1,6 +1,8 @@
 if (process.platform !== 'win32') {
   console.log('skipping build for non-windows platform');
+  process.exit(0);
 }
+
 require('make-promises-safe');
 const CLI = require('neon-cli/lib/cli').default;
 const { exec } = require('child-process-promise');
