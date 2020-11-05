@@ -14,13 +14,14 @@
     "neon-cli": "^0.5.0"
   },
   "scripts": {
-    "build": "neon build && cd native && cargo build && cd .. && node copy-killer.js debug",
-    "build-release": "neon build --release && cd native && cargo build --release && cd .. && node copy-killer.js release",
+    "build": "node build.js",
+    "install": "node build.js release",
     "test": "mocha -r ts-node/register \"test/**/*.test.ts\""
   },
   "devDependencies": {
     "@frontside/tsconfig": "^1.1.0",
     "@types/mocha": "^8.0.3",
+    "child-process-promise": "^2.2.1",
     "expect": "^26.6.1",
     "mocha": "^8.2.0",
     "ts-node": "^9.0.0",
