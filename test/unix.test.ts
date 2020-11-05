@@ -11,7 +11,7 @@ if (process.platform !== 'win32') {
         require('../lib/index').ctrlc(process.pid);
         throw new Error('invoking ctrlc() should definitely fail on windows');
       } catch (e) {
-        expect(e.name).toEqual('TypeError');
+        expect(e.name).toEqual('PlatformError');
         expect(e.message).toContain('non-windows');
       }
     });
