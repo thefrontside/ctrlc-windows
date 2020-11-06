@@ -5,8 +5,7 @@ if (process.platform !== 'win32') {
 
 require('make-promises-safe');
 const CLI = require('neon-cli/lib/cli').default;
-const { exec } = require('child-process-promise');
-
+const { exec } = require('child_process');
 const { copyFile } = require('fs').promises;
 const { join } = require('path');
 
@@ -25,10 +24,18 @@ async function main(argv) {
   const source = join(__dirname, 'native', 'target', profile, 'killer.exe');
   const destination = join(__dirname, 'native', 'killer.exe');
   let cargo = ['cargo build', ...args, '--bin killer'].join(' ');
-  await exec(cargo, {
-    cwd: join(__dirname, "native"),
-    stdio: 'inherit'
+  let code = await new Promise((resolve, reject) => {
+    let child = exec(cargo, {
+      cwd: join(__dirname, "native"),
+      stdio: 'inherit'
+    });
+    child.on('exit', (code) => resolve(code));
+    child.on('error', reject);
   });
+
+  if (code !== 0) {
+    process.exit(code || 1);
+  }
 
   await copyFile(source, destination);
 }
