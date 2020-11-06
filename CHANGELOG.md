@@ -1,5 +1,11 @@
 # ctrlc-windows
 
+## 0.1.3
+
+### Patch Changes
+
+- d6af1a8: Fix release workflow v2
+
 ## 0.1.2
 
 ### Patch Changes
