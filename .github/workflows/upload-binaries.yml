@@ -8,7 +8,7 @@ jobs:
   release:
     name: Create Release
     runs-on: ubuntu-latest
-    if: ${{ github.actor == 'frontsidejack' }}
+    if: ${{ github.actor == 'github-actions' }}
     outputs:
       package_version: ${{ steps.package.outputs.version }}
     steps:
