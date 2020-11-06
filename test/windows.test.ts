@@ -1,6 +1,6 @@
 import { ChildProcess, spawn } from 'child_process';
 import expect from 'expect';
-
+import { converge } from './helpers';
 import { ctrlc } from '../lib/index';
 
 if (process.platform === "win32") {
@@ -32,7 +32,7 @@ if (process.platform === "win32") {
       });
       it('causes that process to exit', async () => {
         await promise;
-        expect(stdout).toContain("exiting...")
+        await converge(() => expect(stdout).toContain("exiting..."))
       });
     });
   });
