@@ -41,7 +41,7 @@ respond to `SIGINT`, this allows them to shutdown too.
 This module exports a single `ctrlc` function which accepts a process
 id, and sends a `CTRL-C` event to that console.
 
-> Note: This will raise an exception on non-windows platforms
+> Note: This is a no-op on non-windows platforms
 
 ## Usage
 

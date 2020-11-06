@@ -10,9 +10,21 @@
   "author": "Frontside Engineering <engineering@frontside.com>",
   "license": "MIT",
   "dependencies": {
+    "@types/node": "^14.14.6",
     "neon-cli": "^0.5.0"
   },
   "scripts": {
-    "install": "neon build"
+    "build": "node build.js",
+    "install": "node build.js release",
+    "test": "mocha -r ts-node/register \"test/**/*.test.ts\""
+  },
+  "devDependencies": {
+    "@frontside/tsconfig": "^1.1.0",
+    "@types/mocha": "^8.0.3",
+    "child-process-promise": "^2.2.1",
+    "expect": "^26.6.2",
+    "mocha": "^8.2.0",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.5"
   }
 }

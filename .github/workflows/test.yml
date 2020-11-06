@@ -1,0 +1,24 @@
+name: Test
+
+on:
+  pull_request:
+    branches:
+      - 'v[0-9]+'
+
+jobs:
+  test:
+    runs-on: ${{ matrix.platform }}
+    name: ${{ matrix.platform }} test
+    strategy:
+      matrix:
+        platform: [ubuntu-latest, windows-latest]
+      fail-fast: false
+    steps:
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - uses: actions/checkout@v1
+      - uses: volta-cli/action@v1
+
+      - run: yarn install
+      - run: yarn test
