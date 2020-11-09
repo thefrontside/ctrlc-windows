@@ -1,3 +1,5 @@
+build
+dist
 native/target
 native/index.node
 native/killer.exe

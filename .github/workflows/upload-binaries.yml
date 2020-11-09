@@ -52,8 +52,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         yarn-version: 1.22.5
-    - run: yarn install
-    - run: yarn neon build --release
+    - run: yarn install --ignore-scripts
+    - run: yarn build release
     - run: yarn node-pre-gyp package
     - uses: svenstaro/upload-release-action@v2
       with:

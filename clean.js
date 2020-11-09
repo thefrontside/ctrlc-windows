@@ -8,7 +8,7 @@ async function main() {
 
     await cli.exec();
 
-    await rmdir(join(process.cwd(), 'native', 'killer.exe'), {
+    await rmdir(join(process.cwd(), 'dist'), {
       recursive: true
     });
   }
