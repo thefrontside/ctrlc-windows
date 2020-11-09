@@ -1,0 +1,3 @@
+---
+"ctrlc-windows": minor
+---
