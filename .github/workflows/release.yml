@@ -15,7 +15,6 @@ jobs:
     - name: Publish Releases
       uses: thefrontside/actions/synchronize-with-npm@v1.6
       with:
-        before_all: yarn clean
         npm_publish: yarn publish
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
