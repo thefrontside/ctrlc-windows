@@ -16,7 +16,7 @@ pub fn ctrlc(mut cx: FunctionContext) -> JsResult<JsUndefined> {
         .arg(format!("{}", pid))
         .spawn() {
             Ok(child) => child,
-            Err(error) => return cx.throw_error(format!("unable to retain console: {}", error))
+            Err(error) => return cx.throw_error(format!("unable to spawn process to kill pid '{}'", error))
         };
 
     let status = killer.wait();
@@ -27,8 +27,8 @@ pub fn ctrlc(mut cx: FunctionContext) -> JsResult<JsUndefined> {
         Ok(status) if status.success() => {
             Ok(cx.undefined())
         },
-        Ok(_) => cx.throw_error("killed with bad exit"),
-        Err(_) => cx.throw_error("bad")
+        Ok(_) => cx.throw_error(format!("unable to kill process with pid '{}'", pid)),
+        Err(error) => cx.throw_error(format!("{}", error))
     }
 }
 
