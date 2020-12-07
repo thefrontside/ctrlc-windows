@@ -1,5 +1,11 @@
 # ctrlc-windows
 
+## 1.0.1
+
+### Patch Changes
+
+- 21ae36b: improved error messages when things go wrong
+
 ## 0.2.0
 
 ### Minor Changes
