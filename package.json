@@ -28,7 +28,7 @@
   "scripts": {
     "build": "node build.js",
     "clean": "node clean.js",
-    "install": "node-pre-gyp install --fallback-to-build=false || node build.js release",
+    "install": "node not-windows.js || node-pre-gyp install --fallback-to-build=false || node build.js release",
     "test": "mocha -r ts-node/register \"test/**/*.test.ts\""
   },
   "devDependencies": {
