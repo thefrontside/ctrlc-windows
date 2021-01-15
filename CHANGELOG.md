@@ -1,5 +1,13 @@
 # ctrlc-windows
 
+## 1.0.2
+
+### Patch Changes
+
+- e67ba75: do not even invoke `node-pre-gyp` on non-windows platforms as part of
+  the install script. This silences warnings that are printed to the
+  console for npm
+
 ## 1.0.1
 
 ### Patch Changes
