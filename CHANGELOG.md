@@ -1,5 +1,12 @@
 # ctrlc-windows
 
+## 1.0.3
+
+### Patch Changes
+
+- 21ce6a2: Include the `not-windows.js` file to short circuit the build on
+  non-windows platforms.
+
 ## 1.0.2
 
 ### Patch Changes
