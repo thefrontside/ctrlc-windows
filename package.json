@@ -8,6 +8,7 @@
     "url": "https://github.com/thefrontside/ctrlc-windows.git"
   },
   "files": [
+    "not-windows.js",
     "build.js",
     "native",
     "lib"
