@@ -6,6 +6,7 @@
 
 - 21ce6a2: Include the `not-windows.js` file to short circuit the build on
   non-windows platforms.
+- 3add0af: Add node 15 and 16 for the binary release workflow
 
 ## 1.0.2
 
