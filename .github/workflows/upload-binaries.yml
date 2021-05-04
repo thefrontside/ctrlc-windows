@@ -37,12 +37,12 @@ jobs:
         release_name: Release ${{ needs.prechecks.outputs.package_version }}
 
   upload-binary:
-    name: Upload Assets (node ${{ matrix.node-version }})
+    name: Upload Asset
     runs-on: windows-latest
     needs: release
     strategy:
       matrix:
-        node-version: ['10', '12', '14']
+        node-version: ['14']
     steps:
     - uses: actions-rs/toolchain@v1
       with:

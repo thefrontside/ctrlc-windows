@@ -9,7 +9,7 @@ const { exec } = require('child_process');
 const { copyFile, mkdir } = require('fs').promises;
 const { join } = require('path');
 
-const [,,profile] = process.argv;
+const [,,profile, napiVersion = '4'] = process.argv;
 
 async function main(argv) {
   let isRelease = argv.find(arg => arg === 'release');
@@ -36,15 +36,15 @@ async function main(argv) {
     process.exit(code || 1);
   }
 
-  await mkdir("dist", { recursive: true });
+  await mkdir(`dist/napi-${napiVersion}`, { recursive: true });
 
   await copyFile(
     join(__dirname, 'native', 'target', profile, 'killer.exe'),
-    join(__dirname, 'dist', 'killer.exe')
+    join(__dirname, `dist/napi-${napiVersion}`, 'killer.exe')
   );
   await copyFile(
     join(__dirname, 'native', 'index.node'),
-    join(__dirname, 'dist', 'index.node')
+    join(__dirname, `dist/napi-${napiVersion}`, 'index.node')
   );
 }
 

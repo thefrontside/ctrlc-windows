@@ -3,7 +3,6 @@ name = "ctrlc-windows"
 version = "0.1.0"
 authors = ["Frontside Engineering <engineering@frontside.com>"]
 license = "MIT"
-build = "build.rs"
 edition = "2018"
 exclude = ["artifacts.json", "index.node"]
 
@@ -11,9 +10,10 @@ exclude = ["artifacts.json", "index.node"]
 name = "ctrlc_windows"
 crate-type = ["cdylib"]
 
-[build-dependencies]
-neon-build = "0.5.0"
+[dependencies.neon]
+default-features = false
+features = ["napi-4"]
+version = "0.8.1"
 
 [dependencies]
-neon = "0.5.0"
 winapi = { version = "0.3.9", features = ["consoleapi"] }

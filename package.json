@@ -17,14 +17,17 @@
     "module_name": "index",
     "host": "https://github.com/thefrontside/ctrlc-windows/releases/download/",
     "remote_path": "v{version}",
-    "package_name": "{node_abi}-{platform}-{arch}.tar.gz",
-    "module_path": "./dist"
+    "package_name": "{platform}-{arch}-napi-v{napi_build_version}.tar.gz",
+    "module_path": "./dist/napi-{napi_build_version}",
+    "napi_versions": [
+      4
+    ]
   },
   "author": "Frontside Engineering <engineering@frontside.com>",
   "license": "MIT",
   "dependencies": {
     "@mapbox/node-pre-gyp": "^1.0.5",
-    "neon-cli": "^0.5.0"
+    "neon-cli": "^0.8.1"
   },
   "scripts": {
     "build": "node build.js",
@@ -43,7 +46,7 @@
     "typescript": "^4.0.5"
   },
   "volta": {
-    "node": "12.19.0",
+    "node": "14.16.1",
     "yarn": "1.22.10"
   }
 }
