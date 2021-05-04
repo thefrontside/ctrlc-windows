@@ -1,5 +1,11 @@
 # ctrlc-windows
 
+## 1.0.4
+
+### Patch Changes
+
+- 58deed0: Fix: Upload binaries for node 15 and 16
+
 ## 1.0.3
 
 ### Patch Changes
