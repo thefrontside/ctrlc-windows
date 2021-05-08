@@ -8,11 +8,12 @@ on:
 jobs:
   test:
     runs-on: ${{ matrix.platform }}
-    name: ${{ matrix.platform }} test
+    name: ${{ matrix.platform }} test node@${{ matrix.node }}
     strategy:
+      fail-fast: false
       matrix:
         platform: [ubuntu-latest, windows-latest]
-      fail-fast: false
+        node: [10, 12, 14, 16]
     steps:
       - uses: actions-rs/toolchain@v1
         with:
