@@ -8,7 +8,7 @@ on:
 jobs:
   test:
     runs-on: ${{ matrix.platform }}
-    name: ${{ matrix.platform }} test node@{{ matrix.node-version }}
+    name: ${{ matrix.platform }} test node@${{ matrix.node-version }}
     strategy:
       matrix:
         platform: [ubuntu-latest, windows-latest]

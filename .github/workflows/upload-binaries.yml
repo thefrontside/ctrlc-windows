@@ -1,63 +1,24 @@
 name: Upload Binaries
-on:
-  push:
-    branches:
-      - 'v[0-9]+'
+
+on: pull_request
 
 jobs:
-  prechecks:
-    name: Check Existing Tags
-    runs-on: ubuntu-latest
-    outputs:
-      tag_exists: ${{ steps.tags.outputs.current }}
-      package_version: ${{ steps.package.outputs.version }}
-    steps:
-    - uses: actions/checkout@v2
-    - name: Get package version
-      run: echo "::set-output name=version::v$(node -p "require('./package.json').version")"
-      id: package
-    - name: Check git tags
-      run: echo "::set-output name=current::$(git ls-remote --tags -q | grep ${{ steps.package.outputs.version }})"
-      id: tags
-
-  release:
-    name: Create Release
-    runs-on: ubuntu-latest
-    needs: prechecks
-    if: ${{ !needs.prechecks.outputs.tag_exists }}
-    outputs:
-      package_version: ${{ needs.prechecks.outputs.package_version }}
-    steps:
-    - uses: actions/checkout@v2
-    - uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.FRONTSIDEJACK_GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ needs.prechecks.outputs.package_version }}
-        release_name: Release ${{ needs.prechecks.outputs.package_version }}
-
   upload-binary:
     name: Upload Assets (node ${{ matrix.node-version }})
     runs-on: windows-latest
-    needs: release
     strategy:
       matrix:
         node-version: ['10', '12', '14', '15', '16']
+      fail-fast: false
     steps:
-    - uses: actions-rs/toolchain@v1
-      with:
-        toolchain: stable
-    - uses: actions/checkout@v2
-    - uses: volta-cli/action@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-        yarn-version: 1.22.5
-    - run: yarn install --ignore-scripts
-    - run: yarn build release
-    - run: yarn node-pre-gyp package
-    - uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: build\stage\*\*.tar.gz
-        tag: ${{ needs.release.outputs.package_version }}
-        file_glob: true
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - uses: actions/checkout@v2
+      - uses: volta-cli/action@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+          yarn-version: 1.22.5
+      - run: yarn install --ignore-scripts
+      - run: yarn build release
+      - run: yarn node-pre-gyp package
