@@ -23,7 +23,7 @@
   "author": "Frontside Engineering <engineering@frontside.com>",
   "license": "MIT",
   "dependencies": {
-    "neon-cli": "^0.5.0",
+    "neon-cli": "^0.8.1",
     "node-pre-gyp": "^0.16.0"
   },
   "scripts": {
