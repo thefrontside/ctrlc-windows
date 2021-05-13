@@ -1,5 +1,11 @@
 # ctrlc-windows
 
+## 1.0.5
+
+### Patch Changes
+
+- 02d3ec1: Fix: Add node 16 to test and upload workflow (node 15 omitted (see PR #28))
+
 ## 1.0.3
 
 ### Patch Changes
