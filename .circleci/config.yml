@@ -27,10 +27,10 @@ commands:
 
 jobs:
   test2:
-    executor: << parameters.executor >>
+    executor: <<parameters.executor>>
     parameters:
       executor:
-        type: << parameters.os >>
+        type: <<parameters.os>>
     steps:
       - checkout
       - yarn_install
