@@ -27,7 +27,7 @@ jobs:
       # - run: yarn build release
       #   env:
       #     RUST_BACKTRACE: 1
-      - run: neon build --release
+      - run: yarn neon build --release
       - run: cargo build --release --bin killer
       - run: |
           cp native/target/release/killer.exe dist
