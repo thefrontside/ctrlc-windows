@@ -1,0 +1,48 @@
+version: 2.1
+
+orbs:
+  win: circleci/windows@2.2.0
+
+executors:
+  linux:
+    docker:
+      - image: circleci/node:15-browsers
+
+commands:
+  yarn_install:
+    steps:
+      - run:
+          name: Installing dependencies
+          command: yarn install --frozen-lockfile --ignore-scripts
+  build:
+    steps:
+      - run:
+          name: Build release binaries
+          command: yarn build release
+  test:
+    steps:
+      - run:
+          name: Run test
+          command: yarn test
+
+jobs:
+  test:
+    executor: << parameters.executor >>
+    parameters:
+      executor:
+        type: << parameters.os >>
+    steps:
+      - checkout
+      - yarn_install
+      - build
+      - test
+
+workflows:
+  test:
+    jobs:
+      - test:
+          name: "test-windows-node-1-2-3"
+          matrix:
+            parameters:
+              os: [win]
+              node-versions: ["10.9.0", "11.9.0", "12.9.1"]
