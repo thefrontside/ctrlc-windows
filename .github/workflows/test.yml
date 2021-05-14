@@ -12,24 +12,23 @@ jobs:
     strategy:
       matrix:
         platform: [windows-latest]
-        node-version: ['16']
+        node-version: ['12', '14', '16']
       fail-fast: false
     steps:
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-      - uses: actions/checkout@v1
-      - uses: volta-cli/action@v1
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-          yarn-version: 1.22.5
       - run: yarn install --ignore-scripts
-      # - run: yarn build release
+      - run: yarn build release
       #   env:
       #     RUST_BACKTRACE: 1
-      - run: yarn neon build --release
-      - run: cargo build --release --bin killer
-      - run: |
-          cp native/target/release/killer.exe dist
-          cp native/index.node dist
+      # - run: yarn neon build --release
+      # - run: cargo build --release --bin killer
+      # - run: |
+      #     cp native/target/release/killer.exe dist
+      #     cp native/index.node dist
       - run: yarn test
