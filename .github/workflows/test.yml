@@ -22,8 +22,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - run: yarn config set python python2.7
-      - run: yarn config set msvs_version 2015
+      - run: yarn global add --production windows-build-tools
       - run: yarn install --ignore-scripts
       - run: yarn build release
       #   env:
