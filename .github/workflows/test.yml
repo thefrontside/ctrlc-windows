@@ -3,7 +3,7 @@ name: Test
 on:
   pull_request:
     branches:
-      - 'v[0-9]+'
+      - "v[0-9]+"
 
 jobs:
   test:
@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         platform: [windows-latest]
-        node-version: ['12', '14', '16']
+        node-version: ["12", "14", "16"]
       fail-fast: false
     steps:
       - uses: actions-rs/toolchain@v1
@@ -22,6 +22,8 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
+      - run: yarn config set python python2.7
+      - run: yarn config set msvs_version 2015
       - run: yarn install --ignore-scripts
       - run: yarn build release
       #   env:
