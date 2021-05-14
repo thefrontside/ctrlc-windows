@@ -25,6 +25,4 @@ jobs:
           yarn-version: 1.22.5
       - run: yarn install --ignore-scripts
       - run: yarn build release
-        env:
-          RUST_BACKTRACE: 1
       - run: yarn test
