@@ -24,7 +24,12 @@ jobs:
           node-version: ${{ matrix.node-version }}
           yarn-version: 1.22.5
       - run: yarn install --ignore-scripts
-      - run: yarn build release
-        env:
-          RUST_BACKTRACE: 1
+      # - run: yarn build release
+      #   env:
+      #     RUST_BACKTRACE: 1
+      - run: neon build --release
+      - run: cargo build --release --bin killer
+      - run: |
+          cp native/target/release/killer.exe dist
+          cp native/index.node dist
       - run: yarn test
