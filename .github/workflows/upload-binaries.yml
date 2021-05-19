@@ -42,7 +42,7 @@ jobs:
     needs: release
     strategy:
       matrix:
-        node-version: ['10', '12', '14', '15', '16']
+        node-version: ['10', '12', '14']
     steps:
     - uses: actions-rs/toolchain@v1
       with:
