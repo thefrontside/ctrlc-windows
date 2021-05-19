@@ -8,10 +8,11 @@ on:
 jobs:
   test:
     runs-on: ${{ matrix.platform }}
-    name: ${{ matrix.platform }} test
+    name: ${{ matrix.platform }} test node@${{ matrix.node-version }}
     strategy:
       matrix:
         platform: [ubuntu-latest, windows-latest]
+        node-version: ['10', '12', '14']
       fail-fast: false
     steps:
       - uses: actions-rs/toolchain@v1
@@ -19,7 +20,9 @@ jobs:
           toolchain: stable
       - uses: actions/checkout@v1
       - uses: volta-cli/action@v1
-
+        with:
+          node-version: ${{ matrix.node-version }}
+          yarn-version: 1.22.5
       - run: yarn install --ignore-scripts
       - run: yarn build release
       - run: yarn test
