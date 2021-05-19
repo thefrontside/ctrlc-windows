@@ -1,5 +1,11 @@
 # ctrlc-windows
 
+## 1.0.5
+
+### Patch Changes
+
+- 696112a: Remove node 15 and 16 in release to undo broken 1.0.4
+
 ## 1.0.3
 
 ### Patch Changes
