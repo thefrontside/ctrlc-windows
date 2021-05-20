@@ -23,8 +23,8 @@
   "author": "Frontside Engineering <engineering@frontside.com>",
   "license": "MIT",
   "dependencies": {
-    "neon-cli": "^0.5.0",
-    "node-pre-gyp": "^0.16.0"
+    "@mapbox/node-pre-gyp": "^1.0.5",
+    "neon-cli": "^0.5.0"
   },
   "scripts": {
     "build": "node build.js",
@@ -33,14 +33,14 @@
     "test": "mocha -r ts-node/register \"test/**/*.test.ts\""
   },
   "devDependencies": {
+    "@changesets/cli": "2.7.2",
     "@frontside/tsconfig": "^1.1.0",
     "@types/mocha": "^8.0.3",
     "@types/node": "^14.14.6",
     "expect": "^26.6.2",
     "mocha": "^8.2.0",
     "ts-node": "^9.0.0",
-    "typescript": "^4.0.5",
-    "@changesets/cli": "2.7.2"
+    "typescript": "^4.0.5"
   },
   "volta": {
     "node": "12.19.0",
