@@ -1,6 +1,6 @@
 {
   "name": "ctrlc-windows",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Send CTRL-C to a process on Windows",
   "main": "lib/index.js",
   "repository": {
