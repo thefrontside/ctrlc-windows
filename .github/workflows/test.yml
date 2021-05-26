@@ -3,26 +3,71 @@ name: Test
 on:
   pull_request:
     branches:
-      - 'v[0-9]+'
+      - "v[0-9]+"
 
 jobs:
   test:
     runs-on: ${{ matrix.platform }}
     name: ${{ matrix.platform }} test node@${{ matrix.node-version }}
     strategy:
+      fail-fast: false
       matrix:
         platform: [ubuntu-latest, windows-latest]
-        node-version: ['10', '12', '14']
-      fail-fast: false
+        node-version: ["10", "12", "14", "16"]
     steps:
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
+      - run: yarn install --ignore-scripts
+      - run: yarn build release
+      # specifically running this after build
+      # using the n-api, the default node on github actions
+      # should build a .node that works in any of the node
+      # versions that we have specified in the matrix
       - uses: volta-cli/action@v1
         with:
           node-version: ${{ matrix.node-version }}
           yarn-version: 1.22.5
-      - run: yarn install --ignore-scripts
-      - run: yarn build release
       - run: yarn test
+
+  effection-smoke-test:
+    runs-on: ${{ matrix.platform }}
+    name: test effection linked - ${{ matrix.platform }} node@${{ matrix.node-version }}
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-latest, windows-latest]
+        node-version: ["10", "12", "14", "16"]
+
+    steps:
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      # checkout and setup ctrlc-windows
+      - uses: actions/checkout@v2
+        with:
+          path: ctrlc-windows
+      - run: yarn install --ignore-scripts
+        working-directory: ctrlc-windows
+      - run: yarn build release
+        working-directory: ctrlc-windows
+      - run: yarn link
+        working-directory: ctrlc-windows
+      - uses: volta-cli/action@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+          yarn-version: 1.22.5
+      # checkout and setup effection then run tests
+      - uses: actions/checkout@v2
+        with:
+          path: effection
+          repository: thefrontside/effection
+      - run: yarn install
+        working-directory: effection
+      - run: yarn link ctrlc-windows
+        working-directory: effection
+      - run: yarn prepack
+        working-directory: effection
+      - run: yarn test
+        working-directory: effection
