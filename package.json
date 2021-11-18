@@ -26,7 +26,7 @@
   "author": "Frontside Engineering <engineering@frontside.com>",
   "license": "MIT",
   "dependencies": {
-    "@mapbox/node-pre-gyp": "^1.0.5",
+    "@mapbox/node-pre-gyp": "^1.0.7",
     "neon-cli": "^0.8.1"
   },
   "scripts": {
