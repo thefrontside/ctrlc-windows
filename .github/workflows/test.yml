@@ -63,7 +63,6 @@ jobs:
         with:
           path: effection
           repository: thefrontside/effection
-          ref: effection-process-env-var-inline
       - run: yarn install
         working-directory: effection
       - run: yarn link ctrlc-windows
