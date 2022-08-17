@@ -1,9 +1,6 @@
 build
 dist
-native/target
-native/index.node
-native/killer.exe
-native/artifacts.json
+target
 **/*~
 **/node_modules
 **/.DS_Store
