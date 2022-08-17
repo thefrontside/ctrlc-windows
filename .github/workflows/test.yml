@@ -13,14 +13,14 @@ jobs:
       fail-fast: false
       matrix:
         platform: [ubuntu-latest, windows-latest]
-        node-version: ["10", "12", "14", "16"]
+        node-version: ["14", "16", "18"]
     steps:
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
       - uses: actions/checkout@v2
-      - run: yarn install --ignore-scripts
-      - run: yarn build release
+      - run: yarn install
+      - run: yarn build
       # specifically running this after build
       # using the n-api, the default node on github actions
       # should build a .node that works in any of the node
@@ -28,7 +28,7 @@ jobs:
       - uses: volta-cli/action@v1
         with:
           node-version: ${{ matrix.node-version }}
-          yarn-version: 1.22.5
+          yarn-version: 1.22.19
       - run: yarn test
 
   effection-smoke-test:
@@ -38,7 +38,7 @@ jobs:
       fail-fast: false
       matrix:
         platform: [ubuntu-latest, windows-latest]
-        node-version: ["10", "12", "14", "16"]
+        node-version: ["14", "16", "18"]
 
     steps:
       - uses: actions-rs/toolchain@v1
@@ -50,14 +50,14 @@ jobs:
           path: ctrlc-windows
       - run: yarn install --ignore-scripts
         working-directory: ctrlc-windows
-      - run: yarn build release
+      - run: yarn build
         working-directory: ctrlc-windows
       - run: yarn link
         working-directory: ctrlc-windows
       - uses: volta-cli/action@v1
         with:
           node-version: ${{ matrix.node-version }}
-          yarn-version: 1.22.5
+          yarn-version: 1.22.19
       # checkout and setup effection then run tests
       - uses: actions/checkout@v2
         with:
