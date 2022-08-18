@@ -10,8 +10,24 @@ use windows::Win32::System::Console::SetConsoleCtrlHandler;
 
 #[napi]
 fn ctrlc(pid_from_js: JsNumber, killer_exe_path: JsString) -> Result<bool> {
-  let pid = pid_from_js.get_int32().unwrap();
-  let killer_exe = OsString::from(killer_exe_path.into_utf8().unwrap().into_owned().unwrap());
+  let pid = match pid_from_js.get_int32() {
+    Ok(child) => child,
+    Err(error) => {
+      return Err(napi::Error {
+        status: Status::GenericFailure,
+        reason: format!("unable to parse passed pid: {}", error),
+      });
+    }
+  };
+  let killer_exe = match OsString::try_from(killer_exe_path.into_utf8()?.into_owned()?) {
+    Ok(child) => child,
+    Err(error) => {
+      return Err(napi::Error {
+        status: Status::GenericFailure,
+        reason: format!("unable to kind process killer executable: {}", error),
+      });
+    }
+  };
 
   unsafe {
     SetConsoleCtrlHandler(None, true);
