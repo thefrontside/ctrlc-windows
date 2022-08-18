@@ -1,10 +1,9 @@
 [package]
 authors = ["Frontside Engineering <engineering@frontside.com>"]
 edition = "2021"
-# exclude = ["artifacts.json", "index.node"]
 license = "MIT"
 name = "ctrlc-windows"
-version = "0.1.0"
+version = "0.2.0"
 
 [[bin]]
 bench = false
@@ -18,7 +17,13 @@ crate-type = ["cdylib"]
 # Default enable napi4 feature, see https://nodejs.org/api/n-api.html#node-api-version-matrix
 napi = {version = "2.6.3", default-features = false, features = ["napi4"]}
 napi-derive = "2.6.0"
-winapi = {version = "0.3.9", features = ["consoleapi", "processthreadsapi", "handleapi"]}
+
+[dependencies.windows]
+features = [
+  "Win32_System_Console",
+  "Win32_Foundation",
+]
+version = "0.39.0"
 
 [build-dependencies]
 napi-build = "2.0.1"

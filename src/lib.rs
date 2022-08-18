@@ -3,11 +3,10 @@
 #[macro_use]
 extern crate napi_derive;
 
-use napi::*;
+use napi::{Error, JsNumber, JsString, Result, Status};
 use std::ffi::OsString;
 use std::process::Command;
-use winapi::shared::minwindef::{FALSE, TRUE};
-use winapi::um::consoleapi::*;
+use windows::Win32::System::Console::SetConsoleCtrlHandler;
 
 #[napi]
 fn ctrlc(pid_from_js: JsNumber, killer_exe_path: JsString) -> Result<bool> {
@@ -15,7 +14,7 @@ fn ctrlc(pid_from_js: JsNumber, killer_exe_path: JsString) -> Result<bool> {
   let killer_exe = OsString::from(killer_exe_path.into_utf8().unwrap().into_owned().unwrap());
 
   unsafe {
-    SetConsoleCtrlHandler(None, TRUE);
+    SetConsoleCtrlHandler(None, true);
   };
 
   let mut killer = match Command::new(killer_exe).arg(format!("{:?}", pid)).spawn() {
@@ -30,7 +29,7 @@ fn ctrlc(pid_from_js: JsNumber, killer_exe_path: JsString) -> Result<bool> {
 
   let status = killer.wait();
 
-  unsafe { SetConsoleCtrlHandler(None, FALSE) };
+  unsafe { SetConsoleCtrlHandler(None, false) };
 
   match status {
     Ok(status) if status.success() => Ok(true),
