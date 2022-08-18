@@ -71,3 +71,4 @@ jobs:
         working-directory: effection
       - run: yarn test
         working-directory: effection
+        shell: bash
