@@ -29,4 +29,8 @@ version = "0.39.0"
 napi-build = "2.0.1"
 
 [profile.release]
-lto = true
+codegen-units = 1 
+lto = true 
+opt-level = "z" # Optimize for size.
+panic = "abort" 
+strip = true # Automatically strip symbols from the binary.

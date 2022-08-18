@@ -1,4 +1,4 @@
-#![deny(clippy::all)]
+#![no_main]
 
 #[macro_use]
 extern crate napi_derive;
