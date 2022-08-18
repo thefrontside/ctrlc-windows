@@ -34,6 +34,7 @@ jobs:
   effection-smoke-test:
     runs-on: ${{ matrix.platform }}
     name: test effection linked - ${{ matrix.platform }} node@${{ matrix.node-version }}
+    timeout: 30
     strategy:
       fail-fast: false
       matrix:
