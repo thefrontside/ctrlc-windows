@@ -3,18 +3,18 @@ name: Release
 on:
   push:
     branches:
-      - 'v[0-9]+'
+      - "v[0-9]+"
 
 jobs:
   publish-releases:
     name: Publish Releases
-    runs-on: ubuntu-20.04
+    runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Publish Releases
-      uses: thefrontside/actions/synchronize-with-npm@v1.9
-      with:
-        npm_publish: yarn publish
-      env:
-        GITHUB_TOKEN: ${{ secrets.FRONTSIDEJACK_GITHUB_TOKEN }}
-        NPM_TOKEN: ${{ secrets.FRONTSIDEJACK_NPM_TOKEN }}
+      - uses: actions/checkout@v1
+      - name: Publish Releases
+        uses: thefrontside/actions/synchronize-with-npm@v1.9
+        with:
+          npm_publish: yarn publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.FRONTSIDEJACK_GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.FRONTSIDEJACK_NPM_TOKEN }}
