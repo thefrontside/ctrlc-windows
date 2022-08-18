@@ -24,7 +24,7 @@
   "author": "Frontside Engineering <engineering@frontside.com>",
   "license": "MIT",
   "scripts": {
-    "build": "napi build --release && rimraf dist && mkdirp dist && mv ctrlc-windows.node dist && mv ./target/release/process-killer.exe dist",
+    "build": "napi build --release && rimraf dist && mkdirp dist && mv ctrlc-windows.node dist && mv ./target/release/process-killer dist",
     "test": "mocha -r ts-node/register \"test/**/*.test.ts\"",
     "build:debug": "napi build --platform",
     "format": "run-p format:prettier format:rs",
