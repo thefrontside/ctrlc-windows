@@ -3,18 +3,27 @@ name: Release
 on:
   push:
     branches:
-      - 'v[0-9]+'
+      - "v[0-9]+"
 
 jobs:
   publish-releases:
     name: Publish Releases
-    runs-on: ubuntu-20.04
+    runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Publish Releases
-      uses: thefrontside/actions/synchronize-with-npm@v1.9
-      with:
-        npm_publish: yarn publish
-      env:
-        GITHUB_TOKEN: ${{ secrets.FRONTSIDEJACK_GITHUB_TOKEN }}
-        NPM_TOKEN: ${{ secrets.FRONTSIDEJACK_NPM_TOKEN }}
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: 1.63
+      - uses: volta-cli/action@v1
+        with:
+          node-version: 14
+          yarn-version: 1.22.19
+      - uses: actions/checkout@v1
+      - run: yarn install
+      - run: yarn build
+      - name: Publish Releases
+        uses: thefrontside/actions/synchronize-with-npm@v1.9
+        with:
+          npm_publish: yarn publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.FRONTSIDEJACK_GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.FRONTSIDEJACK_NPM_TOKEN }}

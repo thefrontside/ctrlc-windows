@@ -5,7 +5,7 @@ import { ctrlc } from '../lib/index';
 if (process.platform === "win32") {
   describe('ctrlc', () => {
     describe('on a process that does not exist', () => {
-      it('is is just a no-op', async() => {
+      it('is just a no-op', async() => {
         ctrlc(1);
       });
     });

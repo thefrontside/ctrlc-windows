@@ -1,0 +1,36 @@
+[package]
+authors = ["Frontside Engineering <engineering@frontside.com>"]
+edition = "2021"
+license = "MIT"
+name = "ctrlc-windows"
+version = "0.2.0"
+
+[[bin]]
+bench = false
+name = "process-killer"
+test = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+# Default enable napi4 feature, see https://nodejs.org/api/n-api.html#node-api-version-matrix
+napi = {version = "2.6.3", default-features = false, features = ["napi4"]}
+napi-derive = "2.6.0"
+
+[dependencies.windows]
+features = [
+  "Win32_System_Console",
+  "Win32_Foundation",
+]
+version = "0.39.0"
+
+[build-dependencies]
+napi-build = "2.0.1"
+
+[profile.release]
+codegen-units = 1 
+lto = true 
+opt-level = "z" # Optimize for size.
+panic = "abort" 
+strip = true # Automatically strip symbols from the binary.
