@@ -18,14 +18,14 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: 1.63
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: yarn install
       - run: yarn build
       # specifically running this after build
       # using the n-api, the default node on github actions
       # should build a .node that works in any of the node
       # versions that we have specified in the matrix
-      - uses: volta-cli/action@v1
+      - uses: volta-cli/action@v3
         with:
           node-version: ${{ matrix.node-version }}
           yarn-version: 1.22.19
@@ -46,7 +46,7 @@ jobs:
         with:
           toolchain: stable
       # checkout and setup ctrlc-windows
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           path: ctrlc-windows
       - run: yarn install --ignore-scripts
@@ -55,12 +55,12 @@ jobs:
         working-directory: ctrlc-windows
       - run: yarn link
         working-directory: ctrlc-windows
-      - uses: volta-cli/action@v1
+      - uses: volta-cli/action@v3
         with:
           node-version: ${{ matrix.node-version }}
           yarn-version: 1.22.19
       # checkout and setup effection then run tests
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           path: effection
           repository: thefrontside/effection
