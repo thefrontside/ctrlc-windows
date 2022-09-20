@@ -1,6 +1,7 @@
 name: Release
 
 on:
+  pull_request:
   push:
     branches:
       - "v[0-9]+"
@@ -21,7 +22,7 @@ jobs:
       - run: yarn install
       - run: yarn build
       - name: Publish Releases
-        uses: thefrontside/actions/synchronize-with-npm@v2
+        uses: thefrontside/actions/synchronize-with-npm@tm/allow-publish-script
         with:
           npm_publish: yarn publish
         env:
