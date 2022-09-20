@@ -17,6 +17,9 @@ jobs:
         with:
           node-version: 14
           yarn-version: 1.22.19
+          registry-url: https://registry.npmjs.org
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - uses: actions/checkout@v3
       - run: yarn install
       - run: yarn build
@@ -26,4 +29,3 @@ jobs:
           npm_publish: yarn publish
         env:
           GITHUB_TOKEN: ${{ secrets.FRONTSIDEJACK_GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
