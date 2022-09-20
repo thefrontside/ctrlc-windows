@@ -24,7 +24,7 @@ jobs:
       - name: Publish Releases
         uses: thefrontside/actions/synchronize-with-npm@tm/allow-publish-script
         with:
-          npm_publish: yarn publish
+          PUBLISH_SCRIPT: yarn publish
         env:
           GITHUB_TOKEN: ${{ secrets.FRONTSIDEJACK_GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
