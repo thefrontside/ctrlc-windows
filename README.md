@@ -43,6 +43,15 @@ id, and sends a `CTRL-C` event to that console.
 
 > Note: This is a no-op on non-windows platforms
 
+## API
+
+### `ctrlc(pid, processKillerPath?)`
+
+Arguments:
+
+* **pid** pid of process to kill
+* **processKillerPath** (optional) path to `process-killer.exe` if it is not at the default location. Normally `process-killer.exe` should be located in the `ctrlc-windows` module, but if you're using a bundler like `rspack` and also using `node-loader` then you'll have to manually copy `ctrlc-windows/dist/{x64,arm64}/process-killer.exe` into your app bundle and provide that path here.
+
 ## Usage
 
 ``` javascript

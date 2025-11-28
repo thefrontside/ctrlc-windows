@@ -1,9 +1,11 @@
+#![windows_subsystem = "windows"]
+
 #[cfg(windows)]
 use std::error::Error;
 
 #[cfg(windows)]
 use windows::Win32::System::Console::{
-  AttachConsole, FreeConsole, GenerateConsoleCtrlEvent, SetConsoleCtrlHandler, CTRL_C_EVENT,
+  AttachConsole, GenerateConsoleCtrlEvent, SetConsoleCtrlHandler, CTRL_C_EVENT,
 };
 
 #[cfg(windows)]
@@ -21,8 +23,6 @@ pub fn main() -> Result<(), Box<dyn Error>> {
 #[cfg(windows)]
 fn kill_pid(pid: u32) -> Result<(), Box<dyn Error>> {
   unsafe {
-    FreeConsole();
-
     if AttachConsole(pid).as_bool() {
       SetConsoleCtrlHandler(None, true);
       GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0);
